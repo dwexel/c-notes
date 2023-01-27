@@ -4,11 +4,12 @@
 
 /*
 	notes:
-		u\makes heavy use of stacks
+		makes heavy use of stacks
 */
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 // globals
 #include "common.h"
@@ -43,15 +44,12 @@ int evaluate(char* tokens)
 	
 	for (; *tokens != '\0'; tokens++)
     {
-        if (*tokens == ' ') 
-		{
-            continue;
-		}
+        if (*tokens == ' ') continue;
 
-        if (*tokens == '(') 
+		if (*tokens == '(') 
 		{
 			push(ops, *tokens);
-		} 
+		}
 		else if (isNumber(*tokens)) 
 		{
 			int val = 0;
@@ -108,19 +106,22 @@ int evaluate(char* tokens)
 }
 
 int main() {
+	char input[50];
+    while (1)
+    {
+        printf("\nEnter expression:");
+        gets(input);
 
-	int n = evaluate("(23 + 16) * 3");
-	printf("answer = %d\n", n);
+		if (input[0] == 'e') exit(0);
 
-	n = evaluate("3 + 4");
-	printf("answer = %d\n", n);
+		// enter adds newline
+		printf("answer = %d", evaluate(input));
 
-	n = evaluate("(23 + 16) * 3");
-	printf("answer = %d\n", n);
-
+		// printf("%s \n", input);
+		// printf("%p \n", input);
+    }
 	return 0;
 }
-
 
 // This code is contributed by Nikhil jindal.
 // thank you Nikhil

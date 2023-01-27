@@ -11,7 +11,6 @@ all: build/program.exe
 clean:
 	if exist *.o            del *.o
 
-
 build:
 	@if not exist build mkdir build
 
