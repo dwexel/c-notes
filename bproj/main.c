@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+// generated files
+#include "parser.h"
+#include "lexer.h"
+
+
+// my files
+// stack before mainf
+#include "include/stack.h"
+#include "include/mainf.h"
+
+int yyparse(yyscan_t scanner);
+int compile(const char *source) {
+    yyscan_t scanner;
+    YY_BUFFER_STATE state;
+    if (yylex_init(&scanner)) {
+        return 1; /* could not initialize */
+    }
+    state = yy_scan_string(source, scanner);
+    if (yyparse(scanner)) {
+        return 2; /* error parsing */
+    }
+    yy_delete_buffer(state, scanner);
+    yylex_destroy(scanner);
+    return 0;
+}
+
+// node stuff
+typedef struct node node;
+node* new(node n);
+
+enum node_types {
+    AST_NUMBER,
+    AST_MUL,
+    AST_ADD
+};
+
+struct node
+{
+    enum node_types tag;
+};
+
+node* node_new(node n)
+{
+    node *ptr = malloc(sizeof(node));
+    if (ptr) *ptr = n;
+    return ptr;
+}
+
+// global stack
+stack* main_stack;
+
+void push_number(int n)
+{
+    push(main_stack, n);
+}
+
+
+int main(void) {
+    main_stack = new_stack();
+
+    char test[] = "4 + 2*10 + 3*(5 + 1)";
+    int code = compile(test);
+
+    while(!empty(main_stack))
+    {
+        printf("\n%d", pop(main_stack));
+    }
+
+    // printf("\n%d", empty(main_stack));
+
+
+    return code;
+}

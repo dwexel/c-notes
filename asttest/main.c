@@ -2,6 +2,18 @@
 #include <stdio.h>
 
 // shortcut macro
+// uses varargs
+// 
+// why dot tag equals struct tag va args
+
+// ohhhh it's casting it into the type that the tag is
+// so, if the tag is of type AST_MUL, the next 2 arguments will be the 2 pointers
+
+// structs are something you can use with var. args
+
+// but, why dot tag equals
+
+
 #define AST_NEW(tag, ...) \
   ast_new((AST){tag, {.tag=(struct tag){__VA_ARGS__}}})
 
@@ -34,6 +46,7 @@ int main()
 				AST_NEW(AST_NUMBER, 2), 
 				AST_NEW(AST_NUMBER, 10),
 			),
+
 			AST_NEW(AST_MUL,
 				AST_NEW(AST_NUMBER, 3),
 				AST_NEW(AST_ADD,
