@@ -5,9 +5,7 @@
 #include "parser.h"
 #include "lexer.h"
 
-
 // my files
-// stack before mainf
 #include "include/stack.h"
 #include "include/mainf.h"
 
@@ -15,13 +13,16 @@ int yyparse(yyscan_t scanner);
 int compile(const char *source) {
     yyscan_t scanner;
     YY_BUFFER_STATE state;
+
     if (yylex_init(&scanner)) {
         return 1; /* could not initialize */
     }
+
     state = yy_scan_string(source, scanner);
     if (yyparse(scanner)) {
         return 2; /* error parsing */
     }
+    
     yy_delete_buffer(state, scanner);
     yylex_destroy(scanner);
     return 0;
@@ -57,6 +58,19 @@ void push_number(int n)
     push(main_stack, n);
 }
 
+void pop_multiply()
+{
+    int right = pop(main_stack);
+    int left = pop(main_stack);
+    push(main_stack, right * left);
+}
+
+void pop_add()
+{
+    int right = pop(main_stack);
+    int left = pop(main_stack);
+    push(main_stack, right + left);
+}
 
 int main(void) {
     main_stack = new_stack();
@@ -64,13 +78,9 @@ int main(void) {
     char test[] = "4 + 2*10 + 3*(5 + 1)";
     int code = compile(test);
 
-    while(!empty(main_stack))
-    {
-        printf("\n%d", pop(main_stack));
+    while(!empty(main_stack)) {
+        printf("\nstack number = %d", pop(main_stack));
     }
-
-    // printf("\n%d", empty(main_stack));
-
 
     return code;
 }

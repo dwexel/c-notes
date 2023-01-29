@@ -6,8 +6,6 @@
   
   #include "include/mainf.h"
   
-
-
   void yyerror(yyscan_t scanner, const char *msg) {
       fprintf(stderr, "Error: %s\n", msg);
   }
@@ -34,14 +32,19 @@
 %%
 
 input:
-  expr             { emit("input complete\n"); }
+  expr             { printf("input parsed\n"); }
 
 expr:
       "number"  	{ 
-                    	// emit("number = %d\n", $1); 
+						printf("number = %d\n", $1);
                   		push_number($1);    
             		}
-
-  | expr "+" expr  {  }
-  | expr "*" expr  {  }
-  | "(" expr ")"   {  }
+  | expr "+" expr   { 
+						printf("add\n");  
+						pop_add();
+					}
+  | expr "*" expr   {
+						printf("mult\n"); 
+						pop_multiply();
+					}
+  | "(" expr ")"    { printf("paren\n"); }

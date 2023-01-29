@@ -1,9 +1,9 @@
 #pragma once
-#define emit printf
 
 // functions for interacting with the parser
 void push_number(int n);
-
+void pop_multiply();
+void pop_add();
 
 
 
