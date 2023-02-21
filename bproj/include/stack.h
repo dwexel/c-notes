@@ -1,6 +1,7 @@
 #pragma once
 
-// types
+// header file for the stack functions
+
 typedef int T;
 typedef struct stack stack;
 

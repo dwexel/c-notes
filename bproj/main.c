@@ -51,6 +51,7 @@ node* node_new(node n)
 }
 
 // global stack
+// make static?
 stack* main_stack;
 
 void push_number(int n)
@@ -75,10 +76,20 @@ void pop_add()
 int main(void) {
     main_stack = new_stack();
 
-    char test[] = "4 + 2*10 + 3*(5 + 1)";
-    int code = compile(test);
+    char line[100];
 
-    while(!empty(main_stack)) {
+    puts("enter expression:");
+    fgets(line, 100, stdin);
+
+    // puts(line);
+
+    int code = compile(line);
+
+    // char test[] = "4 + 2*10 + 3*(5 + 1)";
+    // int code = compile(test);
+
+    while(!empty(main_stack))
+    {
         printf("\nstack number = %d", pop(main_stack));
     }
 

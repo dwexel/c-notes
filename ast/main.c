@@ -34,7 +34,6 @@ struct AST {
 void ast_print(AST *ptr);
 AST *ast_new(AST ast);
 
-
 int main()
 {
 	// define an abstract syntax tree
