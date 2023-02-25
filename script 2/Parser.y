@@ -1,8 +1,8 @@
 %{
   #include <stdbool.h>
-  #include "gen/parser.h"
-  #include "gen/lexer.h"
-  // #include "include/main.h"
+  #include "parser.h"
+  #include "lexer.h"
+  #include "../main.h"
   void yyerror(yyscan_t scanner, const char *msg) 
   {
     fprintf(stderr, "Error: %s\n", msg);
@@ -32,6 +32,8 @@
 %type <ival> input
 %type <ival> expr
 %type <ival> block
+%type <ival> line
+
 
 %left "+"
 %left "*"
@@ -39,34 +41,21 @@
 %%
 
 input:
-  expr                { 
-                        printf("parsed expression: %d\n", $1);
-                      }
-  | block             { }
-  | expr block        { }
+  | input line       { printf("line parsed\n"); }
 
-
-expr:
-  "number"                  { 
-                              // printf("parsed number = %d\n", $1);
-                              $$ = $1;
-                            }
-  | expr "+" expr           {
-                              //printf("add\n");   
-                              $$ = $1 + $3;
-                            }
-  | expr "*" expr           { 
-                              //printf("mult\n");  
-                              $$ = $1 * $3;
-                            }
-  | "(" expr ")"            { 
-                              //printf("paren\n");
-                              $$ = $2;
-                            }
+line:
+  block            { printf("block id = %d\n", $1); }
+  | expr           { printf("value of expression = %d\n", $1); }
 
 block:
   "id" "{" expr "}"       { 
-                            printf("identified block\n");
-                            printf("identifier = %s\n", $1);
-                            $$ = 0;
+                            // printf("identified block\n");
+                            // printf("identifier = %s\n", $1);
+                            $$ = newid();
                           }
+expr:
+  "number"                  { $$ = $1; }
+  | expr "+" expr           { $$ = $1 + $3; } 
+  | expr "*" expr           { $$ = $1 * $3; }
+  | "(" expr ")"            { $$ = $2; }
+

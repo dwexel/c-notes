@@ -2,11 +2,11 @@
 #include <stdbool.h>
 
 // generated files
-#include "parser.h"
-#include "lexer.h"
+#include "gen/parser.h"
+#include "gen/lexer.h"
 
 // my files
-#include "include/main.h"
+#include "main.h"
 
 int yyparse(yyscan_t scanner);
 int compile(const char *source) {
@@ -27,6 +27,13 @@ int compile(const char *source) {
     return 0;
 }
 
+int id = -1;
+int newid(void) {
+    id++;
+    // printf("new id = %d\n", id);
+    return id;
+}
+
 int main(void) {
     FILE *f;
     char line[100];
@@ -36,7 +43,7 @@ int main(void) {
     fgets(line, sizeof(line), f);
     fclose(f);
 
-    printf("line = %s\n", line);
+    //printf("line = %s\n", line);
     int code = compile(line);
     return code;
 }

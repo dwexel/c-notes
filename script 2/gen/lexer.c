@@ -1,6 +1,6 @@
-#line 1 "lexer.c"
+#line 1 "gen/lexer.c"
 
-#line 3 "lexer.c"
+#line 3 "gen/lexer.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -445,8 +445,8 @@ static const flex_int16_t yy_chk[34] =
   #include <math.h>
   #include <string.h>
   #include "parser.h"
-#line 448 "lexer.c"
-#line 449 "lexer.c"
+#line 448 "gen/lexer.c"
+#line 449 "gen/lexer.c"
 
 #define INITIAL 0
 
@@ -715,7 +715,7 @@ YY_DECL
 #line 13 "Lexer.l"
 
 
-#line 718 "lexer.c"
+#line 718 "gen/lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -796,7 +796,7 @@ case 4:
 YY_RULE_SETUP
 #line 24 "Lexer.l"
 {
-              //sscanf(yytext, "%s", &yylval->sval);
+              // sscanf(yytext, "%s", &yylval->sval);
               // printf("lex id = %s\n", yytext);
               strcpy(yylval->name, yytext);
               return TOKEN_ID;
@@ -848,7 +848,7 @@ YY_RULE_SETUP
 #line 43 "Lexer.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 851 "lexer.c"
+#line 851 "gen/lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

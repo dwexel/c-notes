@@ -10,11 +10,11 @@ build/main: $(FILES)
 	$(CC) $(CFLAGS) $(FILES) -o build/main
 
 gen/lexer.c gen/lexer.h: lexer.l
-	$(FLEX) --outfile=lexer.c --header-file=lexer.h --nodefault \
+	$(FLEX) --outfile=gen/lexer.c --header-file=gen/lexer.h --nodefault \
 		--reentrant --bison-bridge --nounistd --noyywrap --never-interactive --warn Lexer.l
 
 gen/parser.c gen/parser.h: parser.y gen/lexer.c
-	$(BISON) --output=parser.c --defines=parser.h --warnings=deprecated parser.y
+	$(BISON) --output=gen/parser.c --defines=gen/parser.h --warnings=deprecated parser.y
 
 clean:
 	del lexer.c lexer.h parser.c parser.h

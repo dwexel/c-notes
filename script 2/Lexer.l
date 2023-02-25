@@ -2,7 +2,7 @@
   #include <stdio.h>
   #include <math.h>
   #include <string.h>
-  #include "gen/parser.h"
+  #include "parser.h"
 %}
 
 whitespace [ \r\n\t]
