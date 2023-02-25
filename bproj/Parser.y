@@ -1,13 +1,11 @@
 %{
   #include <stdbool.h>
-  
   #include "parser.h"
   #include "lexer.h"
-  
   #include "include/mainf.h"
-  
-  void yyerror(yyscan_t scanner, const char *msg) {
-      fprintf(stderr, "Error: %s\n", msg);
+  void yyerror(yyscan_t scanner, const char *msg) 
+  {
+    fprintf(stderr, "Error: %s\n", msg);
   }
 %}
 
@@ -32,19 +30,25 @@
 %%
 
 input:
-  expr             { printf("input parsed\n"); }
+  expr        { printf("input parsed\n"); }
 
 expr:
-      "number"  	{ 
-						printf("number = %d\n", $1);
-                  		push_number($1);    
-            		}
-  | expr "+" expr   { 
-						printf("add\n");  
-						pop_add();
-					}
-  | expr "*" expr   {
-						printf("mult\n"); 
-						pop_multiply();
-					}
-  | "(" expr ")"    { printf("paren\n"); }
+      "number"  
+              { 
+                printf("number = %d\n", $1);
+                push_number($1);    
+              }
+  | expr "+" expr   
+              { 
+                printf("add\n");  
+                pop_add();
+              }
+  | expr "*" expr   
+              {
+                printf("mult\n"); 
+                pop_multiply();
+              }
+  | "(" expr ")"   
+              { 
+                printf("paren\n");
+              }

@@ -32,7 +32,8 @@ int compile(const char *source) {
 typedef struct node node;
 node* new(node n);
 
-enum node_types {
+enum node_types 
+{
     AST_NUMBER,
     AST_MUL,
     AST_ADD
@@ -81,12 +82,7 @@ int main(void) {
     puts("enter expression:");
     fgets(line, 100, stdin);
 
-    // puts(line);
-
     int code = compile(line);
-
-    // char test[] = "4 + 2*10 + 3*(5 + 1)";
-    // int code = compile(test);
 
     while(!empty(main_stack))
     {
