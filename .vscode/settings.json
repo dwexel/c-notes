@@ -37,7 +37,11 @@
         "utility": "cpp",
         "iostream": "cpp",
         "istream": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "sym.h": "c",
+        "main.h": "c",
+        "stdbool.h": "c",
+        "stdio.h": "c"
     },
     "C_Cpp.intelliSenseEngineFallback": "disabled"
 }

@@ -72,13 +72,13 @@
   #include <stdbool.h>
   #include "parser.h"
   #include "lexer.h"
-  #include "../main.h"
+
   void yyerror(yyscan_t scanner, const char *msg) 
   {
     fprintf(stderr, "Error: %s\n", msg);
   }
 
-#line 82 "gen/parser.c"
+#line 82 "parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -113,16 +113,18 @@ enum yysymbol_kind_t
   YYSYMBOL_TOKEN_RPAREN = 4,               /* ")"  */
   YYSYMBOL_TOKEN_PLUS = 5,                 /* "+"  */
   YYSYMBOL_TOKEN_STAR = 6,                 /* "*"  */
-  YYSYMBOL_TOKEN_LBRACE = 7,               /* "{"  */
-  YYSYMBOL_TOKEN_RBRACE = 8,               /* "}"  */
-  YYSYMBOL_TOKEN_DO = 9,                   /* "do"  */
-  YYSYMBOL_TOKEN_NUMBER = 10,              /* "number"  */
-  YYSYMBOL_TOKEN_ID = 11,                  /* "id"  */
-  YYSYMBOL_YYACCEPT = 12,                  /* $accept  */
-  YYSYMBOL_input = 13,                     /* input  */
-  YYSYMBOL_line = 14,                      /* line  */
-  YYSYMBOL_block = 15,                     /* block  */
-  YYSYMBOL_expr = 16                       /* expr  */
+  YYSYMBOL_TOKEN_HYPH = 7,                 /* "-"  */
+  YYSYMBOL_TOKEN_FSLASH = 8,               /* "/"  */
+  YYSYMBOL_TOKEN_LBRACE = 9,               /* "{"  */
+  YYSYMBOL_TOKEN_RBRACE = 10,              /* "}"  */
+  YYSYMBOL_TOKEN_KEYWORD_DO = 11,          /* "do"  */
+  YYSYMBOL_TOKEN_NUMBER = 12,              /* "number"  */
+  YYSYMBOL_TOKEN_ID = 13,                  /* "id"  */
+  YYSYMBOL_YYACCEPT = 14,                  /* $accept  */
+  YYSYMBOL_input = 15,                     /* input  */
+  YYSYMBOL_line = 16,                      /* line  */
+  YYSYMBOL_block = 17,                     /* block  */
+  YYSYMBOL_expr = 18                       /* expr  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -432,19 +434,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   20
+#define YYLAST   36
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  12
+#define YYNTOKENS  14
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  5
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  10
+#define YYNRULES  12
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  18
+#define YYNSTATES  22
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   266
+#define YYMAXUTOK   268
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -484,15 +486,15 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11
+       5,     6,     7,     8,     9,    10,    11,    12,    13
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    43,    43,    44,    47,    48,    51,    57,    58,    59,
-      60
+       0,    56,    56,    57,    62,    67,    71,    80,    81,    82,
+      83,    84,    85
 };
 #endif
 
@@ -509,8 +511,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "\"(\"", "\")\"",
-  "\"+\"", "\"*\"", "\"{\"", "\"}\"", "\"do\"", "\"number\"", "\"id\"",
-  "$accept", "input", "line", "block", "expr", YY_NULLPTR
+  "\"+\"", "\"*\"", "\"-\"", "\"/\"", "\"{\"", "\"}\"", "\"do\"",
+  "\"number\"", "\"id\"", "$accept", "input", "line", "block", "expr", YY_NULLPTR
 };
 
 static const char *
@@ -526,11 +528,11 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 static const yytype_int16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266
+     265,   266,   267,   268
 };
 #endif
 
-#define YYPACT_NINF (-6)
+#define YYPACT_NINF (-8)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -544,8 +546,9 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -6,     0,    -6,    -2,    -6,    -5,    -6,    -6,    13,    11,
-      -2,    -2,    -2,    -6,     1,    14,    -6,    -6
+      -8,     0,    -8,    -2,    -8,    -7,    -8,    -8,    25,    21,
+      -2,    -2,    -2,    -2,    -2,    -8,    14,    28,    -3,    25,
+      25,    -8
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -554,13 +557,14 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        2,     0,     1,     0,     7,     0,     3,     4,     5,     0,
-       0,     0,     0,    10,     0,     8,     9,     6
+       0,     0,     0,     0,     0,    12,     0,     8,     9,    10,
+      11,     6
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -6,    -6,    -6,    -6,     2
+      -8,    -8,    -8,    -8,     4
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -574,38 +578,41 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       2,     3,    10,     3,     0,     9,    11,    12,     4,    17,
-       4,     5,    14,    15,    16,    13,    11,    12,    11,    12,
-      12
+       2,     3,    10,     3,    13,    14,     0,     9,     0,     0,
+       4,     0,     4,     5,    16,    17,    18,    19,    20,    11,
+      12,    13,    14,     0,    21,    15,    11,    12,    13,    14,
+      11,    12,    13,    14,    12,    13,    14
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     3,     7,     3,    -1,     3,     5,     6,    10,     8,
-      10,    11,    10,    11,    12,     4,     5,     6,     5,     6,
-       6
+       0,     3,     9,     3,     7,     8,    -1,     3,    -1,    -1,
+      12,    -1,    12,    13,    10,    11,    12,    13,    14,     5,
+       6,     7,     8,    -1,    10,     4,     5,     6,     7,     8,
+       5,     6,     7,     8,     6,     7,     8
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    13,     0,     3,    10,    11,    14,    15,    16,    16,
-       7,     5,     6,     4,    16,    16,    16,     8
+       0,    15,     0,     3,    12,    13,    16,    17,    18,    18,
+       9,     5,     6,     7,     8,     4,    18,    18,    18,    18,
+      18,    10
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    12,    13,    13,    14,    14,    15,    16,    16,    16,
-      16
+       0,    14,    15,    15,    16,    16,    17,    18,    18,    18,
+      18,    18,    18
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     0,     2,     1,     1,     4,     1,     3,     3,
-       3
+       3,     3,     3
 };
 
 
@@ -1081,59 +1088,79 @@ yyreduce:
   switch (yyn)
     {
   case 3: /* input: input line  */
-#line 44 "parser.y"
-                     { printf("input parsed\n"); }
-#line 1087 "gen/parser.c"
+#line 57 "parser.y"
+                  { 
+                  }
+#line 1095 "parser.c"
     break;
 
   case 4: /* line: block  */
-#line 47 "parser.y"
-                   { printf("block id = %d\n", (yyvsp[0].ival)); }
-#line 1093 "gen/parser.c"
+#line 62 "parser.y"
+                  { 
+                    printf("block id = %p\n", (yyvsp[0].sympointer));
+                    symrec *p = (yyvsp[0].sympointer);
+                    printf("value in block = %lf\n", p->value.var);
+                  }
+#line 1105 "parser.c"
     break;
 
   case 5: /* line: expr  */
-#line 48 "parser.y"
-                   { printf("value of expression = %d\n", (yyvsp[0].ival)); }
-#line 1099 "gen/parser.c"
+#line 67 "parser.y"
+                  { 
+                  }
+#line 1112 "parser.c"
     break;
 
   case 6: /* block: "id" "{" expr "}"  */
-#line 51 "parser.y"
-                          { 
-                            // printf("identified block\n");
-                            // printf("identifier = %s\n", $1);
-                            (yyval.ival) = newid();
+#line 71 "parser.y"
+                          {
+                            symrec *p = putsym((yyvsp[-3].name), SYM_TYPE_INSERT_HERE);
+                            p->value.var = (yyvsp[-1].ival);
+                            // printf("block. %lf\n", p->value.var);
+                            //printf("block. name = %s, value of exp = %d, pointer = %p\n", $1, $3, p);
+                            (yyval.sympointer) = p;
                           }
-#line 1109 "gen/parser.c"
+#line 1124 "parser.c"
     break;
 
   case 7: /* expr: "number"  */
-#line 57 "parser.y"
+#line 80 "parser.y"
                             { (yyval.ival) = (yyvsp[0].ival); }
-#line 1115 "gen/parser.c"
+#line 1130 "parser.c"
     break;
 
   case 8: /* expr: expr "+" expr  */
-#line 58 "parser.y"
+#line 81 "parser.y"
                             { (yyval.ival) = (yyvsp[-2].ival) + (yyvsp[0].ival); }
-#line 1121 "gen/parser.c"
+#line 1136 "parser.c"
     break;
 
   case 9: /* expr: expr "*" expr  */
-#line 59 "parser.y"
+#line 82 "parser.y"
                             { (yyval.ival) = (yyvsp[-2].ival) * (yyvsp[0].ival); }
-#line 1127 "gen/parser.c"
+#line 1142 "parser.c"
     break;
 
-  case 10: /* expr: "(" expr ")"  */
-#line 60 "parser.y"
+  case 10: /* expr: expr "-" expr  */
+#line 83 "parser.y"
+                            { (yyval.ival) = (yyvsp[-2].ival) - (yyvsp[0].ival); }
+#line 1148 "parser.c"
+    break;
+
+  case 11: /* expr: expr "/" expr  */
+#line 84 "parser.y"
+                            { (yyval.ival) = (yyvsp[-2].ival) / (yyvsp[0].ival); }
+#line 1154 "parser.c"
+    break;
+
+  case 12: /* expr: "(" expr ")"  */
+#line 85 "parser.y"
                             { (yyval.ival) = (yyvsp[-1].ival); }
-#line 1133 "gen/parser.c"
+#line 1160 "parser.c"
     break;
 
 
-#line 1137 "gen/parser.c"
+#line 1164 "parser.c"
 
       default: break;
     }

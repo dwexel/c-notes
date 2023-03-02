@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_GEN_PARSER_H_INCLUDED
-# define YY_YY_GEN_PARSER_H_INCLUDED
+#ifndef YY_YY_INCLUDE_PARSER_H_INCLUDED
+# define YY_YY_INCLUDE_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -44,6 +44,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 16 "parser.y"
+
+  #include "sym.h"
+
+#line 53 "include/parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -58,11 +64,13 @@ extern int yydebug;
     TOKEN_RPAREN = 259,            /* ")"  */
     TOKEN_PLUS = 260,              /* "+"  */
     TOKEN_STAR = 261,              /* "*"  */
-    TOKEN_LBRACE = 262,            /* "{"  */
-    TOKEN_RBRACE = 263,            /* "}"  */
-    TOKEN_DO = 264,                /* "do"  */
-    TOKEN_NUMBER = 265,            /* "number"  */
-    TOKEN_ID = 266                 /* "id"  */
+    TOKEN_HYPH = 262,              /* "-"  */
+    TOKEN_FSLASH = 263,            /* "/"  */
+    TOKEN_LBRACE = 264,            /* "{"  */
+    TOKEN_RBRACE = 265,            /* "}"  */
+    TOKEN_KEYWORD_DO = 266,        /* "do"  */
+    TOKEN_NUMBER = 267,            /* "number"  */
+    TOKEN_ID = 268                 /* "id"  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -71,12 +79,18 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 16 "parser.y"
+#line 20 "parser.y"
 
   int    ival;
+
+  double fval;
+
   char   name[100];
 
-#line 80 "gen/parser.h"
+  symrec*   sympointer;
+  void*     none;
+
+#line 94 "include/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -88,4 +102,4 @@ typedef union YYSTYPE YYSTYPE;
 
 int yyparse (void* scanner);
 
-#endif /* !YY_YY_GEN_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_INCLUDE_PARSER_H_INCLUDED  */

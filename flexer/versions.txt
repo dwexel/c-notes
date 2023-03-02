@@ -1,3 +1,0 @@
-bison (GNU Bison) 3.7.4
-win_flex.exe 2.6.4
-

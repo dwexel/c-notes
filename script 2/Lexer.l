@@ -19,24 +19,26 @@ id    {alpha}*
                   return TOKEN_NUMBER; 
                 }
 
-do          { return TOKEN_DO; }
+do              { 
+                  return TOKEN_KEYWORD_DO; 
+                }
 
 {id}        {
               // sscanf(yytext, "%s", &yylval->sval);
-              // printf("lex id = %s\n", yytext);
+              // printf("lexer. identifier = %s\n", yytext);
+              if (strlen(yytext) > 100) perror("identifier too long");
               strcpy(yylval->name, yytext);
               return TOKEN_ID;
             }
-"*"         { return TOKEN_STAR; }
 "+"         { return TOKEN_PLUS; }
+"*"         { return TOKEN_STAR; }
+"-"         { return TOKEN_HYPH; }
+"/"         { return TOKEN_FSLASH; }
+
 "("         { return TOKEN_LPAREN; }
 ")"         { return TOKEN_RPAREN; }
-"{"         {
-              // printf("token lbrace\n"); 
-              return TOKEN_LBRACE;
+"{"         { return TOKEN_LBRACE; }
+"}"         { return TOKEN_RBRACE; }
+.           { 
+              printf("unrecognized character: %s\n", yytext); 
             }
-"}"         { 
-              // printf("token rbrace\n"); 
-              return TOKEN_RBRACE; 
-            }
-.           { printf("unrecognized character: %s", yytext); }
