@@ -1,6 +1,6 @@
 #include "sym.h"
 
-// for internal code ref
+// for reference
 symrec *sym_table;
 
 
@@ -21,7 +21,10 @@ symrec *putsym (char const *name, int sym_type)
 	symrec *res = (symrec *) malloc (sizeof (symrec));
 	res->name = strdup (name);
 	res->type = sym_type;
-	res->value.var = 0; /* Set value to 0 even if fun. */
+	res->value.f = 0; /* Set value to 0 even if fun. */
+
+	// it's a union dummy
+	// res->value.s = calloc()
 	//printf("sym. value = %i\n", res->value.var);
 
 	res->next = sym_table;

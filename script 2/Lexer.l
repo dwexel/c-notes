@@ -2,7 +2,8 @@
   #include <stdio.h>
   #include <math.h>
   #include <string.h>
-  #include "parser.h"
+  // headers
+  #include <parser.h>
 %}
 
 whitespace [ \r\n\t]
@@ -15,9 +16,17 @@ id    {alpha}*
 {whitespace}*   { continue; /* Skip blanks. */ }
 {digit}+        { 
                   //sscanf(yytext, "%d", &yylval->ival);
+
                   yylval->ival = atoi(yytext);
-                  return TOKEN_NUMBER; 
+                  return TOKEN_INTEGER;
                 }
+
+{digit}+"."{digit}*   {
+                        // printf("a demical: %lf\n", atof(yytext));
+
+                        yylval->fval = atof(yytext);
+                        return TOKEN_DECIMAL;
+                      }
 
 do              { 
                   return TOKEN_KEYWORD_DO; 
@@ -39,6 +48,6 @@ do              {
 ")"         { return TOKEN_RPAREN; }
 "{"         { return TOKEN_LBRACE; }
 "}"         { return TOKEN_RBRACE; }
-.           { 
-              printf("unrecognized character: %s\n", yytext); 
+.           {
+              printf("unrecognized character: %s\n", yytext);
             }

@@ -45,13 +45,11 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 17 "parser.y"
+#line 19 "parser.y"
 
   #include <sym.h>
 
-
-
-#line 55 "include/parser.h"
+#line 53 "include/parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -70,10 +68,12 @@ extern int yydebug;
     TOKEN_FSLASH = 263,            /* "/"  */
     TOKEN_LBRACE = 264,            /* "{"  */
     TOKEN_RBRACE = 265,            /* "}"  */
-    TOKEN_KEYWORD_DO = 266,        /* "do"  */
-    TOKEN_INTEGER = 267,           /* "integer"  */
-    TOKEN_DECIMAL = 268,           /* "decimal"  */
-    TOKEN_ID = 269                 /* "id"  */
+    TOKEN_COMMA = 266,             /* ","  */
+    TOKEN_KEYWORD_FN = 267,        /* "fn"  */
+    TOKEN_KEYWORD_END = 268,       /* "end"  */
+    TOKEN_INTEGER = 269,           /* "INTEGER"  */
+    TOKEN_DECIMAL = 270,           /* "DECIMAL"  */
+    TOKEN_ID = 271                 /* "ID"  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -84,13 +84,15 @@ union YYSTYPE
 {
 #line 23 "parser.y"
 
-  int    ival;
+  int ival;
   double fval;
-  char   name[100];
+  // char* sval;
+  char sval[100];
+  
   symrec*   sympointer;
   void*     none;
 
-#line 94 "include/parser.h"
+#line 96 "include/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -1,9 +1,6 @@
 #pragma once
 
 
-// have one union for all symbols? or is that bad?
-
-
 /* Function type. */
 typedef double (func_t) (double);
 
@@ -16,10 +13,8 @@ struct symrec
 	{
 		double  f;    /* value of a VAR */
 		char    s[1000];
+
 		func_t *fun;   /* value of a FUN */
-
-
-
 
 	} value;
 	struct symrec *next;  /* link field */
@@ -28,18 +23,14 @@ struct symrec
 typedef struct symrec symrec;
 
 /* The symbol table: a chain of 'struct symrec'. */
-extern symrec *sym_table; 
+// extern symrec *sym_table;
 
-symrec *putsym (char const *name, int sym_type);
-symrec *getsym (char const *name);
-
+// symrec *putsym (char const *name, int sym_type);
+// symrec *getsym (char const *name);
 
 // symbol types
+#define SYMBOL_FUN 1
+#define SYMBOL_VAR 2
 
 
-#define SYM_TYPE_INSERT_HERE 1
-
-
-#define SYMBOL_TYPE_VARIABLE 2
-#define SYMBOL_TYPE_FUNCTION 3
 

@@ -36,7 +36,7 @@ int compile(const char *source) {
 void catfile(char* destination, char *filename) {
 	FILE *f = fopen(filename, "r");
     if (f == NULL) perror("file not found");
-
+    // safe?
 	char line[100];
 	while (fgets(line, 100, f))
 		strcat(destination, line);
@@ -81,7 +81,7 @@ int main(int argc, char** argv) {
     // --argc;
 
     char file[800];
-    catfile(file, "test.txt");
+    catfile(file, "./test/test.txt");
     int code = compile(file);
     return code;
 }

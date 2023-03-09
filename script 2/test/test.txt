@@ -1,0 +1,4 @@
+goocj {10}
+ret {4 + goocj * 2}
+
+ret

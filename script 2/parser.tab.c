@@ -79,7 +79,7 @@
     fprintf(stderr, "Error: %s\n", msg);
   }
 
-#line 83 "parser.c"
+#line 83 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -102,7 +102,73 @@
 #  endif
 # endif
 
-#include "parser.h"
+
+/* Debug traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+#if YYDEBUG
+extern int yydebug;
+#endif
+/* "%code requires" blocks.  */
+#line 17 "parser.y"
+
+  #include <sym.h>
+
+
+
+#line 121 "parser.tab.c"
+
+/* Token kinds.  */
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    TOKEN_LPAREN = 258,            /* "("  */
+    TOKEN_RPAREN = 259,            /* ")"  */
+    TOKEN_PLUS = 260,              /* "+"  */
+    TOKEN_STAR = 261,              /* "*"  */
+    TOKEN_HYPH = 262,              /* "-"  */
+    TOKEN_FSLASH = 263,            /* "/"  */
+    TOKEN_LBRACE = 264,            /* "{"  */
+    TOKEN_RBRACE = 265,            /* "}"  */
+    TOKEN_KEYWORD_DO = 266,        /* "do"  */
+    TOKEN_INTEGER = 267,           /* "integer"  */
+    TOKEN_DECIMAL = 268,           /* "decimal"  */
+    TOKEN_ID = 269                 /* "id"  */
+  };
+  typedef enum yytokentype yytoken_kind_t;
+#endif
+
+/* Value type.  */
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+union YYSTYPE
+{
+#line 23 "parser.y"
+
+  int    ival;
+  double fval;
+  char   name[100];
+  symrec*   sympointer;
+  void*     none;
+
+#line 160 "parser.tab.c"
+
+};
+typedef union YYSTYPE YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
+#endif
+
+
+
+int yyparse (void* scanner);
+
+
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -497,8 +563,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    59,    59,    64,    65,    69,    70,    78,    87,    88,
-      89,    90,    91,    92,    93,   106,   107
+       0,    59,    59,    64,    65,    69,    70,    76,    85,    86,
+      87,    88,    89,    90,    91,   100,   101
 };
 #endif
 
@@ -1095,31 +1161,29 @@ yyreduce:
   case 2: /* start: input  */
 #line 59 "parser.y"
                             {
-                              // if (yychar == YYEOF) printf("input parsed\n"); 
-                              // printf("most recent symbol = %lf", sym_table->value.f);
+                              // printf("input parsed\n"); 
+                              printf("last value = %lf", sym_table->value.f);
                             }
-#line 1102 "parser.c"
+#line 1168 "parser.tab.c"
     break;
 
   case 5: /* line: block  */
 #line 69 "parser.y"
                             { (yyval.none) = NULL; }
-#line 1108 "parser.c"
+#line 1174 "parser.tab.c"
     break;
 
   case 6: /* line: expr  */
 #line 70 "parser.y"
                             { 
-                              printf("lonely expression: "); 
-                              // printf("    %s\n", $1);
-                              printf("%lf\n", (yyvsp[0].fval));
+                              // printf("lonely expression\n");  
                               (yyval.none) = NULL; 
                             }
-#line 1119 "parser.c"
+#line 1183 "parser.tab.c"
     break;
 
   case 7: /* block: "id" "{" expr "}"  */
-#line 78 "parser.y"
+#line 76 "parser.y"
                             {
                               symrec *p = putsym((yyvsp[-3].name), SYM_TYPE_INSERT_HERE);
                               p->value.f = (yyvsp[-1].fval);
@@ -1127,75 +1191,71 @@ yyreduce:
 
                               // printf("parsed block, value of block = %lf\n", $3);
                             }
-#line 1131 "parser.c"
+#line 1195 "parser.tab.c"
     break;
 
   case 8: /* expr: number  */
-#line 87 "parser.y"
+#line 85 "parser.y"
                             { (yyval.fval) = (yyvsp[0].fval); }
-#line 1137 "parser.c"
+#line 1201 "parser.tab.c"
     break;
 
   case 9: /* expr: expr "-" expr  */
-#line 88 "parser.y"
+#line 86 "parser.y"
                             { (yyval.fval) = (yyvsp[-2].fval) - (yyvsp[0].fval); }
-#line 1143 "parser.c"
+#line 1207 "parser.tab.c"
     break;
 
   case 10: /* expr: expr "+" expr  */
-#line 89 "parser.y"
+#line 87 "parser.y"
                             { (yyval.fval) = (yyvsp[-2].fval) + (yyvsp[0].fval); }
-#line 1149 "parser.c"
+#line 1213 "parser.tab.c"
     break;
 
   case 11: /* expr: expr "/" expr  */
-#line 90 "parser.y"
+#line 88 "parser.y"
                             { (yyval.fval) = (yyvsp[-2].fval) / (yyvsp[0].fval); }
-#line 1155 "parser.c"
+#line 1219 "parser.tab.c"
     break;
 
   case 12: /* expr: expr "*" expr  */
-#line 91 "parser.y"
+#line 89 "parser.y"
                             { (yyval.fval) = (yyvsp[-2].fval) * (yyvsp[0].fval); }
-#line 1161 "parser.c"
+#line 1225 "parser.tab.c"
     break;
 
   case 13: /* expr: "(" expr ")"  */
-#line 92 "parser.y"
+#line 90 "parser.y"
                             { (yyval.fval) = (yyvsp[-1].fval); }
-#line 1167 "parser.c"
+#line 1231 "parser.tab.c"
     break;
 
   case 14: /* expr: "id"  */
-#line 93 "parser.y"
+#line 91 "parser.y"
                             {
                               symrec *p = getsym((yyvsp[0].name));
-                              if (p == NULL) {
-                                fprintf(stderr, "unkown identifier: %s\n", (yyvsp[0].name));
-                                return 1;
-                              }
-
-
+                              if (!p) perror("unkown identifier\n");
                               (yyval.fval) = p->value.f;
-                              //printf("invoked identifier %s: %lf\n", p->name, p->value.f);
+
+                              // printf("invoked variable %s: %lf\n", p->name, p->value.f);
                             }
-#line 1183 "parser.c"
+#line 1243 "parser.tab.c"
     break;
 
   case 15: /* number: "integer"  */
-#line 106 "parser.y"
+#line 100 "parser.y"
                             { (yyval.fval) = (double) (yyvsp[0].ival); }
-#line 1189 "parser.c"
+#line 1249 "parser.tab.c"
     break;
 
   case 16: /* number: "decimal"  */
-#line 107 "parser.y"
+#line 101 "parser.y"
                             { (yyval.fval) = (yyvsp[0].fval);          }
-#line 1195 "parser.c"
+#line 1255 "parser.tab.c"
     break;
 
 
-#line 1199 "parser.c"
+#line 1259 "parser.tab.c"
 
       default: break;
     }
